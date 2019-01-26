@@ -24,3 +24,28 @@ repetition-count-app（別レポジトリ）
 
 著者による論文実装との違い : https://github.com/tomrunia/DeepRepICCV2015
 - theano による深層学習モデルと, numpy等を用いたカウントロジックをそれぞれ，iOSアプリ(CoreML)， サーバーに分離
+
+
+
+# 実行手順
+## 1. mlmodel の作成
+1. 著者実装の theanoモデルを keras モデルに変換する
+  - theano -> pytorch : 重みの reshape のみで可能
+  - pytorch -> kears : pytorch2keras を利用して変換
+  
+2. coremltools を用いて kereas モデルを CoreMLで用いる mlmodel へ変換
+
+## 2. サーバの起動
+1. repository のルートディレクトリで下記コマンドを実行してサーバーを起動
+  - 起動する IPアドレスを 0.0.0.0 とすることで， iOSアプリから接続可能
+  - アプリを起動する iPhone と サーバーを起動する PC は同じネットワーク接続している必要がある
+```
+python manage.py runserver 0.0.0.0:8000
+```
+
+## 3. iOSアプリ(repetition-count-app)の起動，カウント
+1. 1. で作成した mlmodel を repetition-count-app のルートディレクトリにコピー
+2. iPhone を USBケーブルで PCに接続し， iPhone を対象に run
+3. 回数カウントしたい動作を iPhone で写す
+  - 最初に reset を押すことでサーバーとの通信をセットアップ
+
