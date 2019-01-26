@@ -1,0 +1,3 @@
+from repetition_count_server.views.hello import index
+from repetition_count_server.views.counter import Counter
+from repetition_count_server.views.initializer import Initializer
